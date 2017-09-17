@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Info. Viz. V1 </title>
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	<script type="text/javascript" src="d3.v4.min.js"></script>
+</head>
+<body>
+	<p class = "introduction">Mohammed Nauman Siddique</p>
+	<p class = "introduction">Information Visualization</p>
+	<p class = "introduction">Fall 2017</p>
+	<p id = "title"> Visualization Implementation 1 </p>
+	<p class = "heading">  Creating SVG Elements Based on Data using D3 </p> 
+	<figure class = "figure">
+		<img src="SVG_circle_screenshot.png" class = "images" alt="SVG circle element inspect">
+		<figcaption class = "image_caption">Fig1. - Screenshot of SVG circle element inspect.</figcaption>
+	</figure>
+	
+	<p class = "subheading">Explanation of code for SVG circle element using D3 </p> 
+	<textarea rows=50% cols=180% margin-bottom = 2% margin-top = 2%>
+The example on SVG circle elements draws three concentric circles of different radii and fills them with different colors to be identified distinctly. Firstly, we are provided with a vector containing radii for the circles. Secondly, we create an SVG container for encompassing our circle plot. Thirdly, we bind all the circle DOMs to the data set provided by the vector. Lastly, we draw circles by providing X and Y coordinates of the center of the circle, radius of the circle and pass color to be filled in the circle.    
+
+Code snippet to draw multiple SVG concentric circles of different radius and styles :
+
+ 1 circleRadii = [40, 20, 10]
+ 2
+ 3 var svgContainer = d3.select("body").append("svg")
+ 4                                     .attr("width", 600)
+ 5                                     .attr("height", 100);
+ 6
+ 7 var circles = svgContainer.selectAll("circle")
+ 8                           .data(circleRadii)
+ 9                           .enter()
+10                           .append("circle")
+11
+12 var circleAttributes = circles
+13                        .attr("cx", 50)
+14                        .attr("cy", 50)
+15                        .attr("r", function (d) { return d; })
+16                        .style("fill", function(d) {
+17                          var returnColor;
+18                          if (d === 40) { returnColor = "green";
+19                          } else if (d === 20) { returnColor = "purple";
+20                          } else if (d === 10) { returnColor = "red"; }
+21                          return returnColor;
+22                        });
+
+An SVG Circle Element is a predefined basic element of SVG. A circle in SVG can be drawn by using "circle" keyword.
+The necessary attributes of a circle in SVG are as follows:
+
+cx: X coordinate of the center of the circle
+cy: Y coordinate of the center of the circle
+r: radius of the circle
+
+Explanation of the code :
+
+Line 1: Data set of circle radius sizes. It contains three data values denoting the radius of each circle.
+
+Line 3 to 5: Creates SVG container which acts as a canvas for drawing your SVG Elements. These lines define an SVG container with attributes width and height to enclose all the SVG Elements.
+
+Line 7 to 10: Binds data to SVG Circles. These lines select all circle DOM elements, bind them with dataset values, create references to DOM elements which were not present previously
+                and append SVG circle elements.
+                
+Line 12 to 22: Styling SVG Elements based on data. These lines pass necessary attributes to drawing circles with X and Y coordinates of the center of the circle
+                and style of the circle is based on the value of the radius of the circle.
+	</textarea>
+	<script>
+	circleRadii = [40, 20, 10]
+    var svgContainer = d3.select("body").append("svg")
+                                    .attr("width", 600)
+                                    .attr("height", 100);
+    var circles = svgContainer.selectAll("circle")
+                          .data(circleRadii)
+                          .enter()
+                          .append("circle")
+
+	var circleAttributes = circles
+                       .attr("cx", 50)
+                       .attr("cy", 50)
+                       .attr("r", function (d) { return d; })
+                       .style("fill", function(d) {
+                         var returnColor;
+                         if (d === 40) { returnColor = "green";
+                         } else if (d === 20) { returnColor = "purple";
+                         } else if (d === 10) { returnColor = "red"; }
+                         return returnColor;
+                       });
+	</script>
+	<figcaption class = "image_caption">Fig2. - Example of styling SVG elements based on data</figcaption>
+	<p class = "heading">  Line Charts using R  </p> 
+	<figure class = "figure">
+		<img class = "images" src="R_linechart.png" alt="Line Chart">
+		<figcaption class = "image_caption">Fig3. - Line Chart using R.</figcaption>
+	</figure>
+	<p class = "subheading"> Link for viewing PDF version of line chart</p>
+	<a href="http://www.cs.odu.edu/~msiddique/cs725/VI1/R_linechart.pdf">Line Chart PDF</a>
+	<p class = "subheading">Explanation of line charts in R </p>
+	<textarea rows=50% cols=180% margin-bottom = 2% margin-top = 2%>
+Table: autos.dat
+
+cars trucks    suvs
+1     2        4
+3     5        4
+6     4        6
+4     5        6
+9     12        16
+
+ 
+Code snippet to read the values from a file and draw line charts from the values and save the output as a png:
+
+ 1 # Read car and truck values from tab-delimited autos.dat
+ 2 autos_data <- read.table("C:/R/autos.dat", header=T, sep="\t") 
+ 3
+ 4 # Compute the largest y value used in the data (or we could
+ 5 # just use range again)
+ 6 max_y <- max(autos_data)
+ 7
+ 8 # Define colors to be used for cars, trucks, suvs
+ 9 plot_colors <- c("blue","red","forestgreen")
+10
+11 # Start PNG device driver to save output to figure.png
+12 png(filename="C:/R/figure.png", height=295, width=300, 
+13  bg="white")
+14
+15 # Graph autos using y axis that ranges from 0 to max_y.
+16 # Turn off axes and annotations (axis labels) so we can 
+17 # specify them ourself
+18 plot(autos_data$cars, type="o", col=plot_colors[1], 
+19   ylim=c(0,max_y), axes=FALSE, ann=FALSE)
+20
+21 # Make x axis using Mon-Fri labels
+22 axis(1, at=1:5, lab=c("Mon", "Tue", "Wed", "Thu", "Fri"))
+23
+24 # Make y axis with horizontal labels that display ticks at 
+25 # every 4 marks. 4*0:max_y is equivalent to c(0,4,8,12).
+26 axis(2, las=1, at=4*0:max_y)
+27
+28 # Create box around plot
+29 box()
+30
+31 # Graph trucks with red dashed line and square points
+32 lines(autos_data$trucks, type="o", pch=22, lty=2, 
+33   col=plot_colors[2])
+
+34 # Graph suvs with green dotted line and diamond points
+35 lines(autos_data$suvs, type="o", pch=23, lty=3, 
+36    col=plot_colors[3])
+37
+38 # Create a title with a red, bold/italic font
+39 title(main="Autos", col.main="red", font.main=4)
+40
+41 # Label the x and y axes with dark green text
+42 title(xlab= "Days", col.lab=rgb(0,0.5,0))
+43 title(ylab= "Total", col.lab=rgb(0,0.5,0))
+44
+45 # Create a legend at (1, max_y) that is slightly smaller 
+45 # (cex) and uses the same line colors and points used by 
+46 # the actual plots
+47 legend(1, max_y, names(autos_data), cex=0.8, col=plot_colors, 
+48    pch=21:23, lty=1:3);
+49   
+50 # Turn off device driver (to flush output to png)
+51 dev.off()
+
+Explanation of the code:
+
+Line 2: This line is for reading values from a table and saving the values to a variable.
+        autos_data <- read.table("C:/R/autos.dat", header=T, sep="\t")    
+        Parameter List:
+        filename : name of the file which is to read for values
+        header: a logical value which denotes whether the first line in the file is the name of variables or not. It can take true and false as value.
+        sep: denotes the value of each line of the file is separated by this character. It can take values as spaces, tabs and new line.
+        
+Line 6: It computes the largest value from the values obtained from the file.
+        max_y <- max(autos_data)
+
+Line 9: Create a vector or 1-D array of colors to be used for car, truck and SUV.
+        plot_colors <- c("blue","red","forestgreen")
+
+Line 12: Start a png graphic device.
+        png(filename="C:/R/figure.png", height=295, width=300, bg="white")
+        Parameters list :
+        filename : name of the output file
+        width : width of the png image
+        height: height of the png image
+        bg : setting the background color of the png image
+            
+Line 18: Plots the graph for cars
+        plot(autos_data$cars, type="o", col=plot_colors[1], ylim=c(0,max_y), axes=FALSE, ann=FALSE)
+        Parameter List:
+        1st Parameter: coordinate of point in the plot(in this case value of cars read from the file)
+        type: what type of plot should be drawn (o signifies overplotted)
+        col: picks the color (in this case from the plot_colors vector)
+        ylim: range of Y- axis (in this case vector of 0 and max_y value read from the file)
+        axes: set axes properties (in this case axes has been set to false, so we need to draw axes ourselves)
+        ann:  set annotation (in this case it is set to false)
+
+Line 22: make X-axis from Monday to Friday
+        axis(1, at=1:5, lab=c("Mon", "Tue", "Wed", "Thu", "Fri"))
+        Parameter List: 
+        1st Parameter: denotes the side of which axis is to be drawn. Values range from 1 to 4. 1 for below, 2 for left, 3 for above, 4 for right
+        at: points at which tick marks will be drawn
+        lab: labels on the axes (in this case vector of days name from Monday to Friday)
+        
+Line 26: make Y-axis from 0 to max_y
+        axis(2, las=1, at=4*0:max_y)
+        Parameter List:
+        1st Parameter: denotes the side of which axis is to be drawn. Values range from 1 to 4. 1 for below, 2 for left, 3 for above, 4 for right
+        las: accepts numerical values from 0 to 3 for the style of axes. 0 for always parallel to the axis, 1 for always horizontal, 2 for always perpendicular to the axis
+                3 for always vertical-align
+        at: points at which tick marks will be drawn
+        
+Lie 29: draws box around the current plot    
+        box()
+        
+Line 32 and 35: take coordinates and join them to form line segment 
+            lines(autos_data$trucks, type="o", pch=22, lty=2, col=plot_colors[2])
+            Parameter List:
+            1st Parameter: coordinate of point to be joined (in this case it is a vector of values read from the file)
+            type: what type of plot should be drawn (o signifies overplotted)
+            pch: plotting character. Its value signifies the plot type, e.g 21 for filled circle, 22 for filled square, 23 for filled diamond
+            lty: denotes the type of line to be drawn. Value ranges from 0 to 6. e.g. 2 for dashed line, 3 for dotted line
+            col: picks color of line segment
+        
+Line 39: used to add labels to a plot
+        title(main="Autos", col.main="red", font.main=4)
+        Parameter list :
+        main : main title of the plot (displayed on top)
+        col.main : sets color of value passed as main parameter
+        font.main : sets font of value passed as main paramenter
+        
+Line 42 and 43: used to add labels to the plot
+            title(xlab= "Days", col.lab=rgb(0,0.5,0))
+            title(ylab= "Total", col.lab=rgb(0,0.5,0))
+            Parameter list: 
+            xlab : X-axis label
+            ylab : Y-axis label
+            col.lab: color of the label
+            
+Line 47: adds legends to the graph plot
+        legend(1, max_y, names(autos_data), cex=0.8, col=plot_colors, pch=21:23, lty=1:3);
+        Parameter List:
+        1st Parameter: X coordinate of point to be used as legend
+        2nd Parameter: Y coordinate of point to be used as legend
+        3rd Parameter: character or expression that is to appear in legend
+        cex: denotes the value by which texts and symbols need to be scaled for appearing in the legend 
+        col: color for appearing in the legend
+        pch: plotting symbol to appear in the legend
+        lty: line type for appearing in the legend
+	</textarea>
+	<p class = "heading">Tableau</p>
+	<div class='tableauPlaceholder' id='viz1504754084769' style='position: relative'><noscript><a href='#'><img alt='Improve Profits in the South ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Re&#47;RegionalSalesandProfit_29&#47;ImproveProfitsintheSouth&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='RegionalSalesandProfit_29&#47;ImproveProfitsintheSouth' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Re&#47;RegionalSalesandProfit_29&#47;ImproveProfitsintheSouth&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1504754084769');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='1020px';vizElement.style.height='1033px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+	<textarea rows=8% cols=180% margin-bottom = 2% margin-top = 2%>
+Tableau is a very smart going and flexible information visualization app. The tutorial on Tableau with a real world example of an employee working in a large retail chain is easy to understand. The purpose of the tutorial is to export a data set and apply visualization in multiple ways to get the desired result. Initially, a data set was provided with an intention to get meaningful information out of the data using visualizations techniques. Its drag and drop feature makes it very easy to use. Its feature of the dashboard to collate multiple graphs into one is a very important feature for discussing the results obtained from any dataset. Last but not least, the feature of the story creates a start to end collated slides of the visualizations in which the user is interested in. Although the tutorial was very relevant, it needs practice to better understand tableau for further use due to its numerous functionalities and usages. 
+	</textarea>
+	<p class = "heading"> Biblography</p>
+	<textarea rows=5% cols=180% margin-bottom = 2% margin-top = 2%>
+1. https://www.w3schools.com/html/
+2. https://stackoverflow.com
+3. http://matthewjamestaylor.com/blog/adding-css-to-html-with-link-embed-inline-and-import
+4. https://www.rdocumentation.org/
+5. http://www.statmethods.net/
+	</textarea>
+	
+</body>
+</html>
+
+
+
+

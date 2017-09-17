@@ -1,0 +1,41 @@
+.introduction{
+	text-align : right;
+	margin-right : 10%;
+	color : #6C4037;
+	font-weight: bold;
+}
+
+#title{
+	text-align : center;
+	font-weight: bold;
+	font-size : 200%;
+}
+
+.heading{
+	font-weight : bold;
+	font-size : 125%;
+	color : #333300;
+}
+
+.images {
+   max-width: 75%;
+   height: auto;
+   display: block;
+   margin: 0 auto;
+}
+
+.image_caption{
+	text-align: center;
+}
+
+.figure{
+	margin-bottom : 4%;
+	margin-top : 2%;
+	
+}
+
+.subheading{
+	font-weight : bold;
+	font-size : 100%;
+	color : #333300;
+}
